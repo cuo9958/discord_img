@@ -8,7 +8,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-const discord_host = 'ossprod.jrdaimao.com';
+// const discord_host = 'ossprod.jrdaimao.com';
+const discord_host = 'cdn.discordapp.com';
 
 app.get('*', async (req, res) => {
     console.log(req.url);
