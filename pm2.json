@@ -2,7 +2,7 @@
     "apps": [
         {
             "name": "discord_img@18000",
-            "script": "index.js",
+            "script": "dist/index.js",
             "args": [],
             "env": {
                 "PORT": "18000"
