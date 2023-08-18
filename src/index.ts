@@ -29,8 +29,7 @@ app.get('*', async (req, res) => {
     const modified = req.headers['if-modified-since'];
     if (modified) {
         res.header('last-modified', modified);
-        res.status(304);
-        res.send(304);
+        res.sendStatus(304);
         return;
     }
 
