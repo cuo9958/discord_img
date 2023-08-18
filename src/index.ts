@@ -22,7 +22,7 @@ if (!fs.existsSync(ROOT_PATH)) {
 }
 app.get('*', async (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Authorization,X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method');
+    res.header('Access-Control-Allow-Headers', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, PUT, DELETE');
     res.header('Allow', 'GET, POST, PATCH, OPTIONS, PUT, DELETE');
 
@@ -38,8 +38,8 @@ app.get('*', async (req, res) => {
     }
     const response = await axios.get(`https://${discord_host}${req.url}`, { withCredentials: false, responseType: 'stream' });
     console.log(response.headers);
-    if (response.headers['Last-Modified']) {
-        res.header('Last-Modified', response.headers['Last-Modified']);
+    if (response.headers['last-modified']) {
+        res.header('last-modified', response.headers['last-modified']);
     }
     response.data.pipe(res);
     pipeline(response.data, fs.createWriteStream(cache_path), (error) => {
