@@ -27,7 +27,7 @@ app.get('*', async (req, res) => {
     res.header('Allow', 'GET, POST, PATCH, OPTIONS, PUT, DELETE');
 
     const modified = req.headers['if-modified-since'];
-    console.log(modified);
+    console.log(req.headers);
     if (modified) {
         res.header('last-modified', modified);
     }
@@ -38,7 +38,6 @@ app.get('*', async (req, res) => {
     }
     try {
         const response = await axios.get(`https://${discord_host}${req.url}`, { withCredentials: false, responseType: 'stream' });
-        console.log(response.headers);
         if (response.headers['last-modified']) {
             res.header('last-modified', response.headers['last-modified']);
         }
