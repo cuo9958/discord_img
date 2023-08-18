@@ -28,7 +28,7 @@ app.get('*', async (req, res) => {
 
     const modified = req.get('if-modified-since');
     if (modified) {
-        res.set('last-modified', modified);
+        res.header('last-modified', modified);
     }
 
     const cache_path = path.join(ROOT_PATH, req.url.replace(/\//g, '_'));
@@ -36,6 +36,9 @@ app.get('*', async (req, res) => {
         return fs.createReadStream(cache_path).pipe(res);
     }
     const response = await axios.get(`https://${discord_host}${req.url}`, { withCredentials: false, responseType: 'stream' });
+    if (response.headers['last-modified']) {
+        res.header('last-modified', response.headers['last-modified']);
+    }
     response.data.pipe(res);
     pipeline(response.data, fs.createWriteStream(cache_path), (error) => {
         if (error) {
