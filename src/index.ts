@@ -30,6 +30,7 @@ app.get('*', async (req, res) => {
     if (modified) {
         res.header('last-modified', modified);
         res.status(304);
+        res.send(304);
         return;
     }
 
