@@ -29,27 +29,32 @@ app.get('*', async (req, res) => {
     const modified = req.get('If-Modified-Since');
     console.log(modified);
     if (modified) {
-        res.header('Last-Modified', modified);
+        res.header('last-modified', modified);
     }
 
     const cache_path = path.join(ROOT_PATH, req.url.replace(/\//g, '_'));
     if (image_list.has(req.url)) {
         return fs.createReadStream(cache_path).pipe(res);
     }
-    const response = await axios.get(`https://${discord_host}${req.url}`, { withCredentials: false, responseType: 'stream' });
-    console.log(response.headers);
-    if (response.headers['last-modified']) {
-        res.header('last-modified', response.headers['last-modified']);
-    }
-    response.data.pipe(res);
-    pipeline(response.data, fs.createWriteStream(cache_path), (error) => {
-        if (error) {
-            console.log('请求失败', req.url);
-            res.send('失败');
-        } else {
-            image_list.add(req.url);
+    try {
+        const response = await axios.get(`https://${discord_host}${req.url}`, { withCredentials: false, responseType: 'stream' });
+        console.log(response.headers);
+        if (response.headers['last-modified']) {
+            res.header('last-modified', response.headers['last-modified']);
         }
-    });
+        response.data.pipe(res);
+        pipeline(response.data, fs.createWriteStream(cache_path), (error) => {
+            if (error) {
+                console.log('请求失败', req.url);
+                res.send('失败');
+            } else {
+                image_list.add(req.url);
+            }
+        });
+    } catch (error) {
+        console.log('请求失败', req.url);
+        res.send('失败');
+    }
 });
 
 app.listen(port, () => {
