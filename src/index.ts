@@ -26,10 +26,10 @@ app.get('*', async (req, res) => {
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, PUT, DELETE');
     res.header('Allow', 'GET, POST, PATCH, OPTIONS, PUT, DELETE');
 
-    const modified = req.get('if-modified-since');
+    const modified = req.get('If-Modified-Since');
     console.log(modified)
     if (modified) {
-        res.header('last-modified', modified);
+        res.header('Last-Modified', modified);
     }
 
     const cache_path = path.join(ROOT_PATH, req.url.replace(/\//g, '_'));
@@ -37,8 +37,8 @@ app.get('*', async (req, res) => {
         return fs.createReadStream(cache_path).pipe(res);
     }
     const response = await axios.get(`https://${discord_host}${req.url}`, { withCredentials: false, responseType: 'stream' });
-    if (response.headers['last-modified']) {
-        res.header('last-modified', response.headers['last-modified']);
+    if (response.headers['Last-Modified']) {
+        res.header('Last-Modified', response.headers['Last-Modified']);
     }
     response.data.pipe(res);
     pipeline(response.data, fs.createWriteStream(cache_path), (error) => {
