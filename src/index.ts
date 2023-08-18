@@ -27,9 +27,10 @@ app.get('*', async (req, res) => {
     res.header('Allow', 'GET, POST, PATCH, OPTIONS, PUT, DELETE');
 
     const modified = req.headers['if-modified-since'];
-    console.log(req.headers);
     if (modified) {
         res.header('last-modified', modified);
+        res.status(304);
+        return;
     }
 
     const cache_path = path.join(ROOT_PATH, req.url.replace(/\//g, '_'));
