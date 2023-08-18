@@ -27,6 +27,7 @@ app.get('*', async (req, res) => {
     res.header('Allow', 'GET, POST, PATCH, OPTIONS, PUT, DELETE');
 
     const modified = req.get('if-modified-since');
+    console.log(modified)
     if (modified) {
         res.header('last-modified', modified);
     }
