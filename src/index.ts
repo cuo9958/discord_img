@@ -25,7 +25,7 @@ app.get('*', async (req, res) => {
     res.header('Access-Control-Allow-Headers', 'Authorization,X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, PUT, DELETE');
     res.header('Allow', 'GET, POST, PATCH, OPTIONS, PUT, DELETE');
-    // res.set('cache-control', 'max-age=600');
+
     const modified = req.get('if-modified-since');
     if (modified) {
         res.set('last-modified', modified);
