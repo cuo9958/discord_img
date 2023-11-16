@@ -1,0 +1,12 @@
+{
+    "apps": [
+        {
+            "name": "chat_gpt@18001",
+            "script": "dist/chatgpt.js",
+            "args": [],
+            "env": {
+                "PORT": "18001"
+            }
+        }
+    ]
+}
