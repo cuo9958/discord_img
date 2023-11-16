@@ -4,6 +4,8 @@ import axios from 'axios';
 const app = express();
 const port = 18001 || process.env.PORT;
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
@@ -23,7 +25,7 @@ app.get('*', async (req, res) => {
 
 app.post('*', async (req, res) => {
     console.log('请求', 'https://api.openai.com' + req.url);
-    console.log('参数', req.body);
+    console.log('参数', re);
     const response = await axios.post('https://api.openai.com' + req.url, req.body, {
         headers: {
             Authorization: req.headers.authorization,
