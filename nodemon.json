@@ -1,7 +1,7 @@
 {
     "verbose": false,
     "debug": false,
-    "exec": "ts-node  ./src/index.ts",
+    "exec": "ts-node  ./src/chatgpt.ts",
     "ignore": ["node_modules", "src/*"],
     "watch": ["src/**"]
 }
