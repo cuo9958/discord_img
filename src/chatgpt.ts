@@ -25,7 +25,7 @@ app.get('*', async (req, res) => {
 
 app.post('*', async (req, res) => {
     console.log('请求', 'https://api.openai.com' + req.url);
-    console.log('参数', re);
+    console.log('参数', req.body);
     const response = await axios.post('https://api.openai.com' + req.url, req.body, {
         headers: {
             Authorization: req.headers.authorization,
